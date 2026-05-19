@@ -1,0 +1,23 @@
+Advanced ERP modules added:
+
+1. CRM Module
+2. Sales and Invoice Module
+3. Attendance and Leave Module
+4. Supplier and Purchase Module
+5. Reports and Analytics Module
+
+Run backend migration and seed again before starting frontend.
+
+Backend:
+cd backend
+npm install
+npm run db:migrate
+npm run db:seed
+npm run dev
+
+Frontend:
+cd frontend
+npm install
+npm start
+
+Demo login: admin@erp.com / admin123

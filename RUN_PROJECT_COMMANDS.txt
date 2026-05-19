@@ -1,0 +1,19 @@
+ERP PROJECT RUN COMMANDS
+
+BACKEND:
+cd erp-system/backend
+npm install
+npm run db:migrate
+npm run db:seed
+npm run dev
+
+FRONTEND: open another terminal
+cd erp-system/frontend
+npm install
+npm start
+
+Login credentials after seed:
+Admin: admin@erp.com / admin123
+HR: hr@erp.com / hr123
+Finance: finance@erp.com / finance123
+Inventory: inventory@erp.com / inventory123

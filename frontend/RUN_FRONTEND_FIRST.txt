@@ -1,0 +1,16 @@
+FRONTEND RUN CHECK
+
+1. Open terminal inside this exact folder:
+   erp-system/frontend
+
+2. Confirm these files are present:
+   package.json
+   public/index.html
+   src/index.js
+   src/App.js
+
+3. Run:
+   npm install
+   npm start
+
+If you get "Could not find a required file index.html", you are not inside the correct frontend folder or the public/index.html file was deleted while extracting.
