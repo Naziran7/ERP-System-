@@ -31,6 +31,7 @@ const EmployeeList = () => {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [removingId, setRemovingId] = useState(null);
   const [error, setError] = useState('');
 
   const canManage = hasRole('admin', 'hr_manager');
@@ -79,6 +80,22 @@ const EmployeeList = () => {
       setError(err.response?.data?.error || 'Failed to add employee. Please check all required fields.');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleRemove = async (employee) => {
+    const name = `${employee.first_name} ${employee.last_name}`.trim();
+    const confirmed = window.confirm(`Remove ${name || 'this employee'} from active HR records?`);
+    if (!confirmed) return;
+
+    setRemovingId(employee.id);
+    try {
+      await api.delete(`/hr/employees/${employee.id}`);
+      load();
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to remove employee.');
+    } finally {
+      setRemovingId(null);
     }
   };
 
@@ -140,6 +157,7 @@ const EmployeeList = () => {
                   <th>Position</th>
                   <th>Hire Date</th>
                   <th>Status</th>
+                  {canManage && <th>Action</th>}
                 </tr>
               </thead>
               <tbody>
@@ -159,6 +177,18 @@ const EmployeeList = () => {
                     <td>{emp.position || '—'}</td>
                     <td className="muted-cell">{emp.hire_date ? new Date(emp.hire_date).toLocaleDateString('en-IN') : '—'}</td>
                     <td><span className={`badge ${STATUS_BADGE[emp.status] || 'badge-gray'}`}>{emp.status || 'unknown'}</span></td>
+                    {canManage && (
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm"
+                          disabled={removingId === emp.id || emp.status === 'terminated'}
+                          onClick={() => handleRemove(emp)}
+                        >
+                          {removingId === emp.id ? 'Removing...' : 'Remove'}
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

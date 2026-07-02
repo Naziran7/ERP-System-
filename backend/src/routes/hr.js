@@ -89,9 +89,13 @@ router.put('/employees/:id', authorize('admin', 'hr_manager'), async (req, res, 
 });
 
 // DELETE /api/hr/employees/:id
-router.delete('/employees/:id', authorize('admin'), async (req, res, next) => {
+router.delete('/employees/:id', authorize('admin', 'hr_manager'), async (req, res, next) => {
   try {
-    await pool.query('UPDATE employees SET status=$1, updated_at=NOW() WHERE id=$2', ['terminated', req.params.id]);
+    const result = await pool.query(
+      'UPDATE employees SET status=$1, updated_at=NOW() WHERE id=$2 RETURNING id',
+      ['terminated', req.params.id]
+    );
+    if (!result.rows[0]) return res.status(404).json({ error: 'Employee not found.' });
     res.json({ message: 'Employee terminated successfully.' });
   } catch (err) {
     next(err);
