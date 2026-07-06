@@ -1,0 +1,8 @@
+{
+  "env": {
+    "REACT_APP_API_URL": "https://erp-backend-wte8.onrender.com/api"
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
