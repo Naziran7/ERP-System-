@@ -102,7 +102,7 @@ const Login = () => {
             </div>
           </div>
 
-          <p className="login-footer">Backend required: http://localhost:5000 • Frontend: http://localhost:3000</p>
+          <p className="login-footer">Ensure backend is deployed and REACT_APP_API_URL is set on Vercel.</p>
         </div>
       </section>
     </div>
